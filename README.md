@@ -1,6 +1,8 @@
 # World Wide Live
 >Connect live from anywhere on Earth!
 
+Hosting URL: https://world-wide-live-9f9de.web.app/
+
 This webapp helps users locate live video stream from Youtube based on location. The user can prompt a location, address or postal code and then is presented with active live video streams in a selected radius around that location. The stream is viewed in an embedded Youtube window. 
 
 ## What has been done so far
