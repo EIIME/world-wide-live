@@ -31,7 +31,13 @@ As for the project structure:
 - `dist` is where the build output lives (private, not on github)
 
 As for the files that contain the app:
-- TODO (not sure yet)
+- `src/router/index.js` VueRouter JS File, routes compoonents for single page application
+
+- `src/components/HeaderComponent.vue` Main header and subheader
+- `src/components/SearchComponent.vue` Searchfield for location, submit button and list of streams
+
+- `src/searchResults.js` JS code containing API calls for search results and construction of links
+
 
 # Project Setup Guide
 ## Recommended IDE Setup
@@ -48,25 +54,42 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+## Compile and Hot-Reload for Development
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+The app can now be run locally.
+
+## Compile and Minify for Production
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/) (optional)
+## Lint with [ESLint](https://eslint.org/) (optional)
 
 ```sh
 npm run lint
 ```
-### Deploy to Firebase
 
+## Install Firebase
+```sh
+npm install -g firebase-tools
+```
+
+## Login to Firebase 
+```sh
+firebase login
+```
+
+## Initialise Firebase (select no to overwrite)
+```sh
+firebase init
+```
+
+## Deploy to Firebase
 ```sh
 firebase deploy
 ```
