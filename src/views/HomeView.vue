@@ -1,9 +1,11 @@
 <script setup>
-import TheWelcome from "../components/TheWelcome.vue";
+import HeaderComponent from "../components/HeaderComponent.vue";
+import SearchComponent from "../components/SearchComponent.vue";
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <HeaderComponent />
+    <SearchComponent />
   </main>
 </template>
