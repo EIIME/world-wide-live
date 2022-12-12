@@ -20,7 +20,7 @@ The user can search for a location and is presented with a list of live streams.
 - A random location option
 
 ## Project structure and files
-This is a Vite project with Vue 3 deployed with Firebase. A CSS Framework is yet to be decided.
+This is a Vite project with Vue 3 deployed with Firebase. Naive UI is used as basis for Vue components.
 
 As for the project structure:
 - `src` is where the code lives
@@ -52,6 +52,11 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ```sh
 npm install
+```
+
+## Install Naive UI
+```sh
+npm install naive-ui
 ```
 
 ## Compile and Hot-Reload for Development
