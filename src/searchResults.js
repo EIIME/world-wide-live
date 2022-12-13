@@ -12,7 +12,7 @@ export const search = () => {
 
   var x = undefined;
   var y = undefined;
-  var radius = 25;
+  var radius = 100;
   var radiusType = "km";
   var maxResults = 5;
 
@@ -32,6 +32,14 @@ export const search = () => {
           let videos = data.items
           for (var video of videos) {
 
+            var card = document.createElement('div');
+            var thumbnail = document.createElement('img');
+            var title = document.createElement('h3');
+            var description = document.createElement('p');
+            var location = document.createElement('span');
+            var channel = document.createElement('span');
+            var stream_source = document.createElement('span');
+
             var url = "https://www.youtube.com/watch?v=" + video.id.videoId;
             var a = document.createElement('a');
 
@@ -48,8 +56,9 @@ export const search = () => {
             a.href = url;
 
             // Append the anchor element to the body.
+            // element.appendChild(card);
             element.appendChild(a);
-            element.appendChild(newLine);
+            // element.appendChild(newLine);
           }
 
         })

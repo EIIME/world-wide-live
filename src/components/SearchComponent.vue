@@ -9,12 +9,12 @@ export default {
 }
 </script>
 
-
 <template>
     <div class ="searchclass">
         <input id="searchInput" type = "text" placeholder="Look for your favorite spot">
         <button v-on:click.native=search id="searchBtn">Search!</button>
     </div>
+    
     <div id="video"></div>
 </template>
 
