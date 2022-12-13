@@ -28,4 +28,10 @@ export default {
 .searchclass {
     text-align: center;
 }
+.video {
+  border: 1px solid red;
+}
+card {
+  border: 1px solid blue;
+}
 </style>
