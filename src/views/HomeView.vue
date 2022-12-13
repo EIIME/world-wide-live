@@ -1,11 +1,12 @@
 <script setup>
 import HeaderComponent from "../components/HeaderComponent.vue";
-import SearchComponent from "../components/SearchComponent.vue";
+import SearchComponentVue from "../components/SearchComponent.vue";
+
 </script>
 
 <template>
   <main>
     <HeaderComponent />
-    <SearchComponent />
+    <SearchComponentVue />
   </main>
 </template>
