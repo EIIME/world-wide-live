@@ -11,8 +11,8 @@ export default {
 
 <template>
     <div class ="searchclass">
-        <input id="searchInput" type = "text" placeholder="Look for your favorite spot">
-        <button v-on:click.native=search id="searchBtn">Search!</button>
+        <input id="searchInput" class="searchInput" type = "text" placeholder="Look for your favorite spot">
+        <button v-on:click.native=search id="searchBtn" class="searchBtn">Search!</button>
     </div>
     
     <div id="video"></div>
@@ -29,9 +29,12 @@ export default {
     text-align: center;
 }
 .video {
+  /* DEBUG */
   border: 1px solid red;
 }
 card {
+  /* DEBUG */
   border: 1px solid blue;
 }
+
 </style>

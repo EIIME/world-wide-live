@@ -2,6 +2,10 @@ import { API_KEY_GEOCODE, API_KEY_YOUTUBE } from "./apiConfig.js";
 
 export const search = () => {
   var element = document.getElementById("video")
+  // remove all child nodes of element
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  } 
   var error_code = "No location with that name found"
   var error_code2 = "No streams found for that location"
   var searchInput = document.getElementById("searchInput").value
