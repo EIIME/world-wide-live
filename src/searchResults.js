@@ -1,6 +1,21 @@
 import { API_KEY_GEOCODE, API_KEY_YOUTUBE } from "./apiConfig.js";
+import { firebaseConfig } from "./firebaseConfig.js";
+// import * as firebase from 'firebase/app';
+
+const firebase = require('firebase/app').default;
+require('firebase/database');
+
+window.firebase = firebase;
+
+const REF = "test";
 
 export const search = () => {
+  firebase.initializeApp(firebaseConfig);
+
+  firebase.database().ref(REF+"/test").set("dummy");
+  console.log("now in search, firebase should save data");
+
+
   var element = document.getElementById("video")
   // remove all child nodes of element
   while (element.firstChild) {
