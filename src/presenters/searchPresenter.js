@@ -21,6 +21,7 @@ import {
   onValue,
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import { addSearchToFirebase } from "../models/firebaseModel.js";
 
 /*
 firebase.initializeApp(firebaseConfig);
@@ -32,10 +33,10 @@ const REF = "test";
 
 export { auth, database, storage, REF};
 */
-function addThisSearch(input){
-  if(input){
+function addThisSearch(input) {
+  if (input) {
     console.log("modelCreated");
-    return new SearchModel (input);
+    return new SearchModel(input);
   }
 }
 const thisModel = addThisSearch([]);
@@ -72,7 +73,8 @@ export const search = () => {
 
 
 
-  var theSearchList = thisModel.addRecentSearch(searchInput, thisModel);
+  // var theSearchList = thisModel.addRecentSearch(searchInput, thisModel);
+
   //console.log(searchList[0] + "helloooeoooeooeo");
   //thisModel.decideTopSearches(searchList);
   //SearchModel.addRecentSearch(searchInput);
@@ -90,6 +92,8 @@ export const search = () => {
       y = String(data.lng);
       console.log(x);
       console.log(y);
+
+      addSearchToFirebase(searchInput);
 
       fetch("https://youtube.googleapis.com/youtube/v3/search?part=snippet&eventType=live&location=" + x + "%2C%20" + y
         + "&locationRadius=" + radius + radiusType + "&maxResults=" + maxResults + "&type=video&key=" + API_KEY_YOUTUBE)
@@ -171,4 +175,4 @@ export const search = () => {
   printAddress();
 
 }
-export default {thisModel};
+export default { thisModel };
