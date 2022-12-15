@@ -1,5 +1,5 @@
 # World Wide Live
->Connect live from anywhere on Earth!
+>Connect live from anywhere on Earth! ^_^
 
 Hosting URL: https://world-wide-live-9f9de.web.app/
 
