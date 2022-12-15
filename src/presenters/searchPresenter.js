@@ -72,7 +72,7 @@ export const search = () => {
 
 
 
-  var theSearchList = thisModel.addRecentSearch(searchInput);
+  var theSearchList = thisModel.addRecentSearch(searchInput, thisModel);
   //console.log(searchList[0] + "helloooeoooeooeo");
   //thisModel.decideTopSearches(searchList);
   //SearchModel.addRecentSearch(searchInput);
@@ -171,3 +171,4 @@ export const search = () => {
   printAddress();
 
 }
+export default {thisModel};
