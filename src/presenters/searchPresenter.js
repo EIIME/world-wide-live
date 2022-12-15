@@ -32,9 +32,15 @@ const REF = "test";
 
 export { auth, database, storage, REF};
 */
+function addThisSearch(input){
+  if(input){
+    console.log("modelCreated");
+    return new SearchModel (input);
+  }
+}
+const thisModel = addThisSearch([]);
 
 export const search = () => {
-
 
   //database.ref(REF+"/test").set("dummy");
   //console.log("now in search, firebase should save data");
@@ -64,14 +70,11 @@ export const search = () => {
 
   //Communicate to model
 
-  function addThisSearch(input){
-    if(input){
-      console.log("hello");
-      return new SearchModel (input);
-    }
-  }
-  const thisModel = addThisSearch(searchInput);
-  thisModel.addRecentSearch(searchInput);
+
+
+  var theSearchList = thisModel.addRecentSearch(searchInput);
+  //console.log(searchList[0] + "helloooeoooeooeo");
+  //thisModel.decideTopSearches(searchList);
   //SearchModel.addRecentSearch(searchInput);
 
   const printAddress = () => {
