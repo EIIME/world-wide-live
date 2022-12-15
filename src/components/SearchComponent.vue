@@ -1,5 +1,5 @@
 <script>
-import {search} from '../searchResults.js';
+import {search} from '../presenters/searchPresenter.js';
 
 export default {
   name: 'searchResults',
@@ -14,7 +14,7 @@ export default {
         <input id="searchInput" class="searchInput" type = "text" placeholder="Look for your favorite spot">
         <button v-on:click.native=search id="searchBtn" class="searchBtn">Search!</button>
     </div>
-    
+
     <div id="video"></div>
 </template>
 
