@@ -20,6 +20,7 @@ import {
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
+/*
 firebase.initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase();
@@ -28,11 +29,13 @@ const storage = firebase.storage();
 const REF = "test";
 
 export { auth, database, storage, REF};
+*/
+
 export const search = () => {
   
 
-  database.ref(REF+"/test").set("dummy");
-  console.log("now in search, firebase should save data");
+  //database.ref(REF+"/test").set("dummy");
+  //console.log("now in search, firebase should save data");
 
 
   var element = document.getElementById("video")
@@ -43,6 +46,7 @@ export const search = () => {
   var error_code = "No location with that name found"
   var error_code2 = "No streams found for that location"
   var searchInput = document.getElementById("searchInput").value
+
   const coordinates = fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + searchInput + "&key=" + API_KEY_GEOCODE)
     .then(response => { return response.json() })
     .then(data => { return data.results[0].geometry.location }).catch((error) => { console.log(error) });
