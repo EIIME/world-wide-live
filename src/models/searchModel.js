@@ -13,6 +13,10 @@ class SearchModel{
     this.topLocation = 0;
     this.topListName = [];
     this.topListFreq = [];
+
+    let mostSearched = new Object();
+    let secondMostSearched = new Object();
+    let thirdMostSearched = new Object();
     //else{
     //  this.searchArray = [...this.searchArray, currentSearch];
     //}
@@ -23,13 +27,14 @@ class SearchModel{
 
    addRecentSearch(theSearch, data) {
     if (!theSearch) return;
-     data.topListFreq = [];
-     data.topListFreq = [];
+     /*data.topListFreq = [];
+     data.topListFreq = [];*/
      this.searchArray = [...this.searchArray, theSearch];
-     var first = decideTopSearchesACB(this.searchArray, data);
-     var second = decideTopSearchesACB(first, data);
-     var third = decideTopSearchesACB(second, data);
-     updateFirebaseFromModel(data.topListFreq, data.topListName);
+     let array = this.searchArray;
+     mostSearched = decideTopSearchesACB(array, data);
+     secondMostSearched = decideTopSearchesACB(array.filter(search => search == mostSearched.city), data);
+     thirdMostSearched = decideTopSearchesACB(array.filter(search => search == mostSearched.city || search ==secondMostSearched.city) , data);
+     //updateFirebaseFromModel(data.topListFreq, data.topListName);
      return;
      }
 
@@ -72,7 +77,7 @@ function decideTopSearchesACB(searches,data){
 
   }
 
-  currentTopListACB(recentTotal, mostHits, data);
+  //currentTopListACB(recentTotal, mostHits, data);
 
   /*if(recentSearches.length > 3){
     decideTopSearchesACB(recentSearches.filter(search => search == mostHits), data);
@@ -81,10 +86,10 @@ function decideTopSearchesACB(searches,data){
     if(data.topListFreq == []) return;
     updateFirebaseFromModel(data.topListFreq, data.topListName);
   }*/
-  console.log(recentTotal + mostHits);
+  //console.log(recentTotal + mostHits);
 
-
-  return recentSearches.filter(search => search == mostHits);
+  return {city: mostHits, freq: recentTotal};
+  //return recentSearches.filter(search => search == mostHits);
 
 }
 
