@@ -1,13 +1,13 @@
-import SearchModel from "./searchModel.js"
+//import SearchModel from "./searchModel.js"
 import { ref, onMounted } from "vue"
 import { collection, onSnapshot, addDoc } from "firebase/firestore"
 import { db } from '@/firebase'
+import { search } from "../searchResults"
 
 const searchesCollectionRef = collection(db, "search history")
 const allSearches = ref([])
 
-onMounted(() => {
-
+function searchesListenerCB() {
   onSnapshot(searchesCollectionRef, (querySnapshot) => {
     const fbSearchHistory = []
     querySnapshot.forEach((doc) => {
@@ -18,9 +18,19 @@ onMounted(() => {
       fbSearchHistory.push(search)
     })
     allSearches.value = fbSearchHistory
+    console.log("allSearches below")
     console.log(allSearches)
   })
-})
+}
+
+function getSearchesFromFirebaseACB() {
+  console.log("allSearches.value below")
+  var searchArray = [];
+  allSearches._rawValue.map(item => { searchArray.push(item.search) })
+  return searchArray;
+}
+
+// onMounted(searchesListnerCB)
 
 const addSearchToFirebase = (city) => {
   const newSearch = ref(city)
@@ -42,4 +52,4 @@ function updateFirebaseFromModel(list1, list2) {
 function updateModelFromFirebase(model) {
 
 }
-export { updateFirebaseFromModel, updateModelFromFirebase, allSearches, addSearchToFirebase };
+export { updateFirebaseFromModel, updateModelFromFirebase, allSearches, addSearchToFirebase, searchesListenerCB, getSearchesFromFirebaseACB };

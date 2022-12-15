@@ -4,7 +4,6 @@ import { searchResultsView } from "../views/searchResultsView.js";
 import SearchModel from "../models/searchModel.js"
 // import * as firebase from 'firebase/app';
 
-/* From Axels code */
 //import { initializeApp } from "firebase/app";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -21,7 +20,7 @@ import {
   onValue,
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import { addSearchToFirebase } from "../models/firebaseModel.js";
+import { addSearchToFirebase, allSearches, getSearchesFromFirebaseACB } from "../models/firebaseModel.js";
 
 /*
 firebase.initializeApp(firebaseConfig);
@@ -94,6 +93,7 @@ export const search = () => {
       console.log(y);
 
       addSearchToFirebase(searchInput);
+      getSearchesFromFirebaseACB();
 
       fetch("https://youtube.googleapis.com/youtube/v3/search?part=snippet&eventType=live&location=" + x + "%2C%20" + y
         + "&locationRadius=" + radius + radiusType + "&maxResults=" + maxResults + "&type=video&key=" + API_KEY_YOUTUBE)
