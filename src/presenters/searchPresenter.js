@@ -38,7 +38,8 @@ function addThisSearch(input) {
     return new SearchModel(input);
   }
 }
-const thisModel = addThisSearch([]);
+
+const thisModel = addThisSearch(getSearchesFromFirebaseACB());
 
 export const search = () => {
 
