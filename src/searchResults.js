@@ -2,17 +2,36 @@ import { API_KEY_GEOCODE, API_KEY_YOUTUBE } from "./apiConfig.js";
 import { firebaseConfig } from "./firebaseConfig.js";
 // import * as firebase from 'firebase/app';
 
-const firebase = require('firebase/app').default;
-require('firebase/database');
+/* From Axels code */
+//import { initializeApp } from "firebase/app";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import "firebase/compat/storage";
+import {
+  getDatabase,
+  set,
+  ref,
+  get,
+  child,
+  onChildAdded,
+  onChildRemoved,
+  onValue,
+} from "firebase/database";
+import { getAuth } from "firebase/auth";
 
-window.firebase = firebase;
+firebase.initializeApp(firebaseConfig);
+const auth = getAuth();
+const database = getDatabase();
+const storage = firebase.storage();
 
 const REF = "test";
 
+export { auth, database, storage, REF};
 export const search = () => {
-  firebase.initializeApp(firebaseConfig);
+  
 
-  firebase.database().ref(REF+"/test").set("dummy");
+  database.ref(REF+"/test").set("dummy");
   console.log("now in search, firebase should save data");
 
 
