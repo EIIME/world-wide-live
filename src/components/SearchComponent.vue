@@ -1,6 +1,9 @@
 <script>
-import {search} from '../presenters/searchPresenter.js';
-import {topSearchesView} from '../views/topSearchesView.jsx';
+import { search } from '../presenters/searchPresenter.js';
+import { topSearchesView } from '../views/topSearchesView.jsx';
+import { isUserLoggedIn } from '../models/firebaseModel.js';
+
+console.log("User is logged in: " + isUserLoggedIn());
 
 export default {
   name: 'searchResults',
@@ -15,33 +18,47 @@ export default {
 </script>
 
 <template>
-    <div class ="searchclass">
-        <input id="searchInput" class="searchInput" type = "text" placeholder="Look for your favorite spot">
-        <button v-on:click.native=search id="searchBtn" class="searchBtn">Search!</button>
-        <button v-on:click.native=topSearchesView id="toppSearchBtn" class="toppSearchBtn">View Most Searched</button>
-        <button @click="reloadPage">Log out</button>
+  <div class="searchclass">
+    <input id="searchInput" class="searchInput" type="text" placeholder="Look for your favorite spot">
+    <button v-on:click.native=search id="searchBtn" class="searchBtn">Search!</button>
+    <button v-on:click.native=topSearchesView id="toppSearchBtn" class="toppSearchBtn">View Most Searched</button>
+    <div>
+      <template v-if="isUserLoggedIn">
+        <!-- render something else here if the user is not logged in -->
+        <button id="LogOutButton" class="LogOutButton">Log Out</button>
+      </template>
+      <template v-else>
+        <!-- render something else here if the user is not logged in -->
+        <!-- <router-link to="/signup">
+          <button id="signUpButton" class="signUpButton">Sign Up</button>
+          <button id="logInButton" class="logInButton">Log In</button>
+        </router-link> -->
+      </template>
     </div>
+  </div>
 
-    <div id="video"></div>
+  <div id="video"></div>
 </template>
 
 <style scoped>
 .video {
-    text-align: center;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
 }
+
 .searchclass {
-    text-align: center;
+  text-align: center;
 }
+
 .video {
   /* DEBUG */
   border: 1px solid red;
 }
+
 card {
   /* DEBUG */
   border: 1px solid blue;
 }
-
 </style>
