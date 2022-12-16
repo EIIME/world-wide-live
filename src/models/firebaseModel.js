@@ -18,8 +18,9 @@ function signUpUser(email, password) {
 
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      // Signed in 
+      // Signed in
       const user = userCredential.user;
+      signInUser(email, password)
       // ...
     })
     .catch((error) => {
@@ -27,6 +28,7 @@ function signUpUser(email, password) {
       const errorMessage = error.message;
       // ..
     });
+
 }
 
 // Move to sign in presenter
