@@ -20,7 +20,18 @@ import {
   onValue,
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import { addSearchToFirebase, allSearches, getSearchesFromFirebaseACB } from "../models/firebaseModel.js";
+import { addSearchToFirebase, allSearches, getSearchesFromFirebase, searchesListenerCB } from "../models/firebaseModel.js";
+import { onMounted } from "vue";
+
+/*
+const searchArray = await getSearchesFromFirebase().then(
+  (data) => {
+    console.log("searchArray Final");
+    console.log(data);
+    return data;
+  }
+).catch((error) => { console.log(error) });
+*/
 
 /*
 firebase.initializeApp(firebaseConfig);
@@ -39,7 +50,7 @@ function addThisSearch(input) {
   }
 }
 
-const thisModel = addThisSearch(getSearchesFromFirebaseACB());
+const thisModel = addThisSearch(await getSearchesFromFirebase());
 
 export const search = () => {
 
@@ -94,7 +105,6 @@ export const search = () => {
       console.log(y);
 
       addSearchToFirebase(searchInput);
-      getSearchesFromFirebaseACB();
 
       fetch("https://youtube.googleapis.com/youtube/v3/search?part=snippet&eventType=live&location=" + x + "%2C%20" + y
         + "&locationRadius=" + radius + radiusType + "&maxResults=" + maxResults + "&type=video&key=" + API_KEY_YOUTUBE)
