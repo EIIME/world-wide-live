@@ -8,8 +8,12 @@ console.log("User is logged in: " + isUserLoggedIn());
 export default {
   name: 'searchResults',
   methods: {
-    search
+    search,
+    reloadPage() {
+        window.location.reload();
+      }
   }
+
 }
 </script>
 

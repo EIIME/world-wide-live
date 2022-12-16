@@ -10,13 +10,10 @@ class SearchModel{
       this.topLocation = 0;
     }*/
     this.searchArray = theSearchArray;
-    this.topLocation = 0;
-    this.topListName = [];
-    this.topListFreq = [];
 
-    let mostSearched = new Object();
-    let secondMostSearched = new Object();
-    let thirdMostSearched = new Object();
+    const mostSearched = new Object();
+    const secondMostSearched = new Object();
+    const thirdMostSearched = new Object();
     //else{
     //  this.searchArray = [...this.searchArray, currentSearch];
     //}
@@ -31,9 +28,9 @@ class SearchModel{
      data.topListFreq = [];*/
      this.searchArray = [...this.searchArray, theSearch];
      let array = this.searchArray;
-     mostSearched = decideTopSearchesACB(array, data);
-     secondMostSearched = decideTopSearchesACB(array.filter(search => search == mostSearched.city), data);
-     thirdMostSearched = decideTopSearchesACB(array.filter(search => search == mostSearched.city || search ==secondMostSearched.city) , data);
+     mostSearched = decideTopSearchACB(array);
+     secondMostSearched = decideTopSearchACB(array.filter(search => search == mostSearched.city));
+     thirdMostSearched = decideTopSearchACB(array.filter(search => search == mostSearched.city || search ==secondMostSearched.city));
      //updateFirebaseFromModel(data.topListFreq, data.topListName);
      console.log(mostSearched.city + " " + mostSearched.freq);
      console.log(secondMostSearched.city + " " + secondMostSearched.freq);
@@ -50,61 +47,21 @@ class SearchModel{
 
 
 }
-function decideTopSearchesACB(searches,data){
+function decideTopSearchACB(searches){
+  const amountOfSearches = {};
+  const topSearch = null;
+  const numberOfSearches = 0;
 
-  var recentSearches = [];
-  var recentTotal = 0;
-  var mostHits = null;
-  var final = [];
-
-  if(searches === []){
-
-    return null;
+  for(const search of searches){
+    amountOfSearches[search] = (amountOfSearches[search]|| 0) + 1;
   }
-  for(var i = 0; i < parseInt(searches.length); i++){
-    var totalHits = 1;
-
-    if(!recentSearches.includes(searches[i])){
-
-    for(var j = 0; j < searches.length; j++){
-      if(searches[i] === searches[j] && i !== j){
-        totalHits++;
-      }
-    }
-    if(recentTotal < totalHits){
-      recentTotal = totalHits;
-      mostHits = searches[i];
+  for(const search in amountOfSearches){
+    if(numberOfSearches < amountOfSearches[search]){
+      numberOfSearches = amountOfSearches[search];
+      topSearch = search;
     }
   }
-    recentSearches = [...recentSearches, searches[i]];
-
-  }
-
-  //currentTopListACB(recentTotal, mostHits, data);
-
-  /*if(recentSearches.length > 3){
-    decideTopSearchesACB(recentSearches.filter(search => search == mostHits), data);
-  }
-  else{
-    if(data.topListFreq == []) return;
-    updateFirebaseFromModel(data.topListFreq, data.topListName);
-  }*/
-  //console.log(recentTotal + mostHits);
-
-  return {city: mostHits, freq: recentTotal};
-  //return recentSearches.filter(search => search == mostHits);
-
+  return {city: topSearch, freq: numberOfSearches};
 }
 
-function currentTopListACB(freq, name, data){
-  if(data.topListFreq == []){
-    data.topListFreq = [freq];
-    data.topListName = [name];
-  }
-  else{
-    data.topListFreq = [...data.topListFreq, freq];
-    data.topListName = [...data.topListName, name];
-  }
-
-}
 export default SearchModel;
