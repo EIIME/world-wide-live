@@ -31,8 +31,8 @@ const REF = "test";
 export { auth, database, storage, REF};
 */
 
-export const search = () => {
-  
+/*export const search = () => {
+
 
   //database.ref(REF+"/test").set("dummy");
   //console.log("now in search, firebase should save data");
@@ -42,7 +42,7 @@ export const search = () => {
   // remove all child nodes of element
   while (element.firstChild) {
     element.removeChild(element.firstChild);
-  } 
+  }
   var error_code = "No location with that name found"
   var error_code2 = "No streams found for that location"
   var searchInput = document.getElementById("searchInput").value
@@ -94,10 +94,10 @@ export const search = () => {
 
               var title = document.createElement('h3')
               title.className = "card-title";
-              
+
               var description = document.createElement('p')
               description.className = "card-description";
-              
+
               var location = document.createElement('span')
               location.className = "card-location";
 
@@ -150,4 +150,4 @@ export const search = () => {
 
   printAddress();
 
-}
+}*/

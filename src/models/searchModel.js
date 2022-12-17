@@ -1,5 +1,5 @@
 import thisModel from "../presenters/searchPresenter.js";
-import {updateFirebaseFromModel} from "../models/firebaseModel.js";
+import {getUserSearchesFromFirebase} from "../models/firebaseModel.js";
 
 class SearchModel{
   constructor(theSearchArray){
@@ -11,39 +11,31 @@ class SearchModel{
     }*/
     this.searchArray = theSearchArray;
 
-    const mostSearched = new Object();
-    const secondMostSearched = new Object();
-    const thirdMostSearched = new Object();
-    //else{
-    //  this.searchArray = [...this.searchArray, currentSearch];
-    //}
+    this.mostSearched = {city: "null", freq: 0};
+    this.secondMostSearched = {city: "null", freq: 0};
+    this.thirdMostSearched = {city: "null", freq: 0};
+
 
 
 
   }
 
-   addRecentSearch(theSearch, data) {
-    if (!theSearch) return;
-     /*data.topListFreq = [];
-     data.topListFreq = [];*/
-     this.searchArray = [...this.searchArray, theSearch];
+   addRecentSearch() {
      let array = this.searchArray;
-     mostSearched = decideTopSearchACB(array);
-     secondMostSearched = decideTopSearchACB(array.filter(search => search == mostSearched.city));
-     thirdMostSearched = decideTopSearchACB(array.filter(search => search == mostSearched.city || search ==secondMostSearched.city));
-     //updateFirebaseFromModel(data.topListFreq, data.topListName);
+     if(array.length < 3){
+       this.mostSearched = {city: "null", freq: 0};
+       this.secondMostSearched = {city: "null", freq: 0};
+       this.thirdMostSearched = {city: "null", freq: 0};
+       }
+    else{
+     this.mostSearched = decideTopSearchACB(array);
+     this.secondMostSearched = decideTopSearchACB(array.filter(search => search == mostSearched.city));
+     this.thirdMostSearched = decideTopSearchACB(array.filter(search => search == mostSearched.city || search ==secondMostSearched.city));
      console.log(mostSearched.city + " " + mostSearched.freq);
      console.log(secondMostSearched.city + " " + secondMostSearched.freq);
      console.log(thirdMostSearched.city + " " + thirdMostSearched.freq);
-     return;
      }
-
-    /* currentTopListACB(freq, name){
-       this.topListFreq = [...this.topListFreq, freq];
-       this.topListName = [...this.topListName, name];
-     }*/
-
-
+     }
 
 
 }

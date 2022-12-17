@@ -8,5 +8,6 @@ import SearchComponentVue from "../components/SearchComponent.vue";
   <main>
     <HeaderComponent />
     <SearchComponentVue />
+    
   </main>
 </template>

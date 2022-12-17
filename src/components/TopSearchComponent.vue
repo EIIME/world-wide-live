@@ -1,44 +1,28 @@
 <script>
-
-import { thisModel } from '../presenters/searchPresenter.js';
-
-
-
-
-
+import thisModel from '../presenters/searchPresenter.js';
+console.log(thisModel.thisModel.mostSearched.city)
 export default {
-
-  data: function () { return { isHidden: false } },
-
+  data() {
+    return { thisModel: thisModel.thisModel }
+  }
 
 }
-
-
 
 </script>
 
 <template>
 
-  <div class="searchclass">
-    <button v-on:click.native=topSearchesView id="toppSearchBtn" class="toppSearchBtn">View Most Searched</button>
-    <div class="topSearchessss">
-      <ol>
-        <li v-for="topSearch in topSearches" :key="topSearch.id">
-          {{ topSearch }}
-        </li>
+    <h1>Your most searched places</h1>
+    <ol>
+    <li>
+    "You searched " + {{thisModel.mostSearched.city}} + " amount of times: " + {{thisModel.mostSearched.freq}}
+    </li>
+    <li>
+    "You searched " + {{thisModel.secondMostSearched.city}} + " amount of times: " + {{thisModel.secondMostSearched.freq}}
+    </li>
+    <li>
+    "You searched " + {{thisModel.thirdMostSearched.city}} + " amount of times: " + {{thisModel.thirdMostSearched.freq}}
+    </li>
+    </ol>
 
-        <li v-for="topSearch in topSearches" :key="topSearch.id">
-          {{ topSearch + " " }}
-        </li>
-        <li v-for="topSearch in topSearches" :key="topSearch.id">
-          {{ topSearch }}
-        </li>
-      </ol>
-      <button v-on:click="isHidden = true">Hide the text below</button>
-      <button v-on:click="isHidden = !isHidden">Toggle hide and show</button>
-      <h1 v-if="!isHidden">{{ TheResult }}</h1>
-    </div>
-
-
-  </div>
 </template>

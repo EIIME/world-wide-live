@@ -2,6 +2,7 @@ import { API_KEY_GEOCODE, API_KEY_YOUTUBE } from "../apiConfig.js";
 import { firebaseConfig } from "../firebaseConfig.js";
 import { searchResultsView } from "../views/searchResultsView.js";
 import SearchModel from "../models/searchModel.js"
+
 // import * as firebase from 'firebase/app';
 
 //import { initializeApp } from "firebase/app";
@@ -43,14 +44,22 @@ const REF = "test";
 
 export { auth, database, storage, REF};
 */
-function addThisSearch(input) {
+function createModel(input) {
   if (input) {
     console.log("modelCreated");
     return new SearchModel(input);
   }
 }
 
-const thisModel = addThisSearch(await getSearchesFromFirebase());
+const thisModel = createModel([]);
+
+if(getUserSearchesFromFirebase == []){
+  thisModel.addRecentSearch();
+}
+else{
+  thisModel.addRecentSearch(getUserSearchesFromFirebase);
+}
+
 
 export const search = () => {
 

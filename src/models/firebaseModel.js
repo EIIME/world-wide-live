@@ -2,7 +2,6 @@
 import { ref, onMounted } from "vue"
 import { collection, onSnapshot, addDoc, doc, getDoc, arrayUnion, updateDoc, setDoc } from "firebase/firestore"
 import { db, auth } from '@/firebase'
-import { search } from "../searchResults"
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { update } from "firebase/database";
@@ -139,10 +138,13 @@ const addSearchToUserFirebase = (city) => {
     console.log("Current user:");
     console.log(getCurrentUser().email);
     const email = getCurrentUser().email;
-    oldArray = getSearchesFromFirebase();
-    newArray = oldArray.push(city);
-    updateDoc(doc(db, "users", email), {
-      searchHistory: newArray
+    var oldArray = [];
+    if(Array.isArray(getUserSearchesFromFirebase())){
+      oldArray = getUserSearchesFromFirebase();
+    }
+    oldArray.push(city);
+    setDoc(doc(db, "users", email), {
+      searchHistory: oldArray
     });
   }
 }

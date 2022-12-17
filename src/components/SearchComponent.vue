@@ -1,6 +1,5 @@
 <script>
 import { search } from '../presenters/searchPresenter.js';
-import { topSearchesView } from '../views/topSearchesView.jsx';
 import { isUserLoggedIn } from '../models/firebaseModel.js';
 
 console.log("User is logged in: " + isUserLoggedIn());
@@ -8,10 +7,7 @@ console.log("User is logged in: " + isUserLoggedIn());
 export default {
   name: 'searchResults',
   methods: {
-    search,
-    reloadPage() {
-        window.location.reload();
-      }
+    search
   }
 
 }
@@ -21,7 +17,9 @@ export default {
   <div class="searchclass">
     <input id="searchInput" class="searchInput" type="text" placeholder="Look for your favorite spot">
     <button v-on:click.native=search id="searchBtn" class="searchBtn">Search!</button>
-    <button v-on:click.native=topSearchesView id="toppSearchBtn" class="toppSearchBtn">View Most Searched</button>
+    <router-link to="/yourtopsearches">
+    <button v-on:click.native=topSearchesView id="toppSearchBtn" class="toppSearchBtn">View Your Most Searched</button>
+    </router-link>
     <div>
       <template v-if="isUserLoggedIn">
         <!-- render something else here if the user is not logged in -->
