@@ -1,10 +1,11 @@
 //import SearchModel from "./searchModel.js"
 import { ref, onMounted } from "vue"
-import { collection, onSnapshot, addDoc, getDoc } from "firebase/firestore"
+import { collection, onSnapshot, addDoc, doc, getDoc, arrayUnion, updateDoc, setDoc } from "firebase/firestore"
 import { db, auth } from '@/firebase'
 import { search } from "../searchResults"
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { update } from "firebase/database";
 
 
 function signUpUser(email, password) {
@@ -38,7 +39,6 @@ function signInUser(email, password) {
   console.log("Current user:");
   console.log(getCurrentUser());
   console.log("Add temp search to firebase:")
-  addSearchToUserFirebase("Stockholm");
   console.log("email: " + email)
   console.log("password: " + password)
   console.log("auth: ")
@@ -100,6 +100,19 @@ async function getSearchesFromFirebase() {
   return searchesArray;
 }
 
+async function getUserSearchesFromFirebase() {
+  const docRef = doc(db, "users", getCurrentUser().email);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data().searchHistory);
+    return docSnap.data().searchHistory;
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+}
+
 // onMounted(searchesListnerCB)
 
 const addSearchToFirebase = (city) => {
@@ -113,7 +126,7 @@ const addSearchToFirebase = (city) => {
 
 const addUserToFirebase = (email) => {
   const newUser = ref(email)
-  addDoc(usersCollectionRef, {
+  setDoc(doc(db, "users", email), {
     email: newUser.value,
     searchHistory: []
   })
@@ -125,36 +138,11 @@ const addSearchToUserFirebase = (city) => {
     console.log("addSearchToUserFirebase called");
     console.log("Current user:");
     console.log(getCurrentUser().email);
-    const userSearchesCollectionRef = collection(db, "users")
-    const newSearch = ref(city)
-    const email = getCurrentUser().email
+    const email = getCurrentUser().email;
 
-    try {
-      var query = userSearchesCollectionRef.where("email", "==", email)
-    } catch (error) { console.log(error) }
-
-    console.log("query below")
-    console.log(query)
-    query.get().then(function (querySnapshot) {
-      if (!querySnapshot.empty) {
-        // Get the first document
-        var doc = querySnapshot.docs[0];
-        console.log("doc below")
-        console.log(doc)
-
-        // Create a new item to add to the array
-        var newSearch = city;
-
-        // Use the `arrayUnion` operator to append the new item to the array
-        doc.update({
-          searchHistory: firebase.firestore.FieldValue.arrayUnion(newSearch)
-        });
-      } else {
-        console.log("No such document!");
-      }
+    updateDoc(doc(db, "users", email), {
+      searchHistory: arrayUnion(city)
     });
-
-    newSearch.value = ""
   }
 }
 
@@ -169,4 +157,16 @@ function updateFirebaseFromModel(list1, list2) {
 function updateModelFromFirebase(model) {
 
 }
-export { updateFirebaseFromModel, updateModelFromFirebase, allSearches, addSearchToFirebase, searchesListenerCB, getSearchesFromFirebase, isUserLoggedIn, getCurrentUser, signUpUser, signInUser };
+export {
+  updateFirebaseFromModel,
+  updateModelFromFirebase,
+  allSearches,
+  addSearchToFirebase,
+  searchesListenerCB,
+  getSearchesFromFirebase,
+  isUserLoggedIn, getCurrentUser,
+  signUpUser,
+  signInUser,
+  addSearchToUserFirebase,
+  getUserSearchesFromFirebase
+};

@@ -20,7 +20,7 @@ import {
   onValue,
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import { addSearchToFirebase, allSearches, getCurrentUser, getSearchesFromFirebase, searchesListenerCB } from "../models/firebaseModel.js";
+import { addSearchToFirebase, addSearchToUserFirebase, allSearches, getCurrentUser, getSearchesFromFirebase, getUserSearchesFromFirebase, searchesListenerCB } from "../models/firebaseModel.js";
 import { onMounted } from "vue";
 
 /*
@@ -105,6 +105,8 @@ export const search = () => {
       console.log(y);
 
       addSearchToFirebase(searchInput);
+      addSearchToUserFirebase(searchInput);
+      getUserSearchesFromFirebase();
 
       fetch("https://youtube.googleapis.com/youtube/v3/search?part=snippet&eventType=live&location=" + x + "%2C%20" + y
         + "&locationRadius=" + radius + radiusType + "&maxResults=" + maxResults + "&type=video&key=" + API_KEY_YOUTUBE)
