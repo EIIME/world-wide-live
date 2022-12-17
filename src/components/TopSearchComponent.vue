@@ -28,7 +28,7 @@ export default {
         </li>
 
         <li v-for="topSearch in topSearches" :key="topSearch.id">
-          {{ topSearch }}
+          {{ topSearch + " " }}
         </li>
         <li v-for="topSearch in topSearches" :key="topSearch.id">
           {{ topSearch }}
