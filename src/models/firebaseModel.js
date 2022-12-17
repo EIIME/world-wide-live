@@ -139,9 +139,10 @@ const addSearchToUserFirebase = (city) => {
     console.log("Current user:");
     console.log(getCurrentUser().email);
     const email = getCurrentUser().email;
-
+    oldArray = getSearchesFromFirebase();
+    newArray = oldArray.push(city);
     updateDoc(doc(db, "users", email), {
-      searchHistory: arrayUnion(city)
+      searchHistory: newArray
     });
   }
 }
