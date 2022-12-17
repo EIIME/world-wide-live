@@ -20,7 +20,7 @@ import {
   onValue,
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import { addSearchToFirebase, allSearches, getSearchesFromFirebase, searchesListenerCB } from "../models/firebaseModel.js";
+import { addSearchToFirebase, allSearches, getCurrentUser, getSearchesFromFirebase, searchesListenerCB } from "../models/firebaseModel.js";
 import { onMounted } from "vue";
 
 /*
