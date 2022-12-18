@@ -1,37 +1,14 @@
 import { API_KEY_GEOCODE, API_KEY_YOUTUBE } from "../apiConfig.js";
-import { firebaseConfig } from "../firebaseConfig.js";
 import { searchResultsView } from "../views/searchResultsView.js";
-import SearchModel from "../models/searchModel.js"
-import {thisModel} from "../models/firebaseModel.js";
+import { thisModel } from "../models/firebaseModel.js";
 
-// import * as firebase from 'firebase/app';
-
-//import { initializeApp } from "firebase/app";
-import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
-import {
-  getDatabase,
-  set,
-  ref,
-  get,
-  child,
-  onChildAdded,
-  onChildRemoved,
-  onValue,
-} from "firebase/database";
-import { getAuth } from "firebase/auth";
-import { addSearchToFirebase, addSearchToUserFirebase, allSearches, getCurrentUser, getSearchesFromFirebase, getUserSearchesFromFirebase, searchesListenerCB } from "../models/firebaseModel.js";
-import { onMounted } from "vue";
 
-
-
+import { addSearchToUserFirebase, getUserSearchesFromFirebase } from "../models/firebaseModel.js";
 
 export const search = () => {
-
-  
-
   var element = document.getElementById("video")
   // remove all child nodes of element
   while (element.firstChild) {
@@ -45,24 +22,11 @@ export const search = () => {
     .then(response => { return response.json() })
     .then(data => { return data.results[0].geometry.location }).catch((error) => { console.log(error) });
 
-  console.log(coordinates)
-
-
   var x = undefined;
   var y = undefined;
   var radius = 100;
   var radiusType = "km";
   var maxResults = 5;
-
-  //Communicate to model
-
-
-
-  // var theSearchList = thisModel.addRecentSearch(searchInput, thisModel);
-
-  //console.log(searchList[0] + "helloooeoooeooeo");
-  //thisModel.decideTopSearches(searchList);
-  //SearchModel.addRecentSearch(searchInput);
 
   const printAddress = () => {
     coordinates.then((data) => {
@@ -72,47 +36,19 @@ export const search = () => {
 
         return;
       }
-      console.log(data);
       x = String(data.lat);
       y = String(data.lng);
-      console.log(x);
-      console.log(y);
 
-
-      function treatHTTPResponseACB(response) {
-        /TODO throw when the HTTP response is not 200, otherwise return response.json()/
-
-        if (response.status !== 200) {
-
-          throw new Error('There was an Error');
-        } else { return response.json() }
-
-      }
-
-      function transformSearchResultACB(trans) {
-
-        return trans.results
-      }
-
-
-
-
-      getUserSearchesFromFirebase().then((previousSearches) => { console.log("Before search: "); console.log(previousSearches) })
-      getUserSearchesFromFirebase().then((previousSearches) => { addSearchToUserFirebase(searchInput, previousSearches);
-        getUserSearchesFromFirebase().then((array) => {thisModel.addRecentSearches(array)}); })
-      console.log("Running getUserSearchesFromFirebase###################");
-      getUserSearchesFromFirebase().then((data) => { console.log("Here is the data after search: "); console.log(data) });
-      console.log("Running Complete ###################");
-
-
-
-
+      // update firebase and get the new list of searches
+      getUserSearchesFromFirebase().then((previousSearches) => {
+        addSearchToUserFirebase(searchInput, previousSearches);
+        getUserSearchesFromFirebase().then((array) => { thisModel.addRecentSearches(array) });
+      });
 
       fetch("https://youtube.googleapis.com/youtube/v3/search?part=snippet&eventType=live&location=" + x + "%2C%20" + y
         + "&locationRadius=" + radius + radiusType + "&maxResults=" + maxResults + "&type=video&key=" + API_KEY_YOUTUBE)
         .then((result) => { return result.json() })
         .then((data) => {
-          console.log(data)
           if (data.items.length == 0) {
             console.log("No streams found for near " + searchInput);
             element.appendChild(document.createTextNode(error_code2));
@@ -149,8 +85,6 @@ export const search = () => {
               var video_title = document.createTextNode(video.snippet.title);
 
               // Append the text node to anchor element.
-              // a.appendChild(video_title);
-              console.log(video.snippet.thumbnails.medium.url);
               thumbnail.src = video.snippet.thumbnails.medium.url;
               title.appendChild(video_title);
               description.appendChild(document.createTextNode(video.snippet.description));
@@ -166,18 +100,6 @@ export const search = () => {
 
               // Append the anchor element to the body.
               searchResultsView(element, a, card, thumbnail, title, description, location, channel, stream_source);
-              /*
-              a.appendChild(thumbnail);
-              a.appendChild(title);
-              card.appendChild(a);
-              card.appendChild(description);
-              card.appendChild(location);
-              card.appendChild(channel);
-              card.appendChild(stream_source);
-              // card.appendChild(a);
-
-              element.appendChild(card);*/
-              // element.appendChild(newLine);
             }
           }
         })

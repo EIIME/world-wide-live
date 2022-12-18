@@ -2,7 +2,6 @@
 import { search } from '../presenters/searchPresenter.js';
 import { isUserLoggedIn } from '../models/firebaseModel.js';
 
-console.log("User is logged in: " + isUserLoggedIn());
 
 export default {
   name: 'searchResults',
