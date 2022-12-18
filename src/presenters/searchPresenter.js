@@ -44,7 +44,7 @@ const REF = "test";
 
 export { auth, database, storage, REF};
 */
-var array = ["stockholm", "tokyo","stockholm", "tokyo", "oslo", "stockholm","tokyo","stockholm", "tokyo", "oslo", "stockholm"];
+var array = ["stockholm", "tokyo", "stockholm", "tokyo", "oslo", "stockholm", "tokyo", "stockholm", "tokyo", "oslo", "stockholm"];
 function createModel(input) {
   if (input) {
     console.log("modelCreated");
@@ -116,9 +116,34 @@ export const search = () => {
       console.log(x);
       console.log(y);
 
-      addSearchToFirebase(searchInput);
-      addSearchToUserFirebase(searchInput);
-      getUserSearchesFromFirebase();
+
+      function treatHTTPResponseACB(response) {
+        /TODO throw when the HTTP response is not 200, otherwise return response.json()/
+
+        if (response.status !== 200) {
+
+          throw new Error('There was an Error');
+        } else { return response.json() }
+
+      }
+
+      function transformSearchResultACB(trans) {
+
+        return trans.results
+      }
+
+
+
+
+      getUserSearchesFromFirebase().then((previousSearches) => { console.log("Before search: "); console.log(previousSearches) })
+      getUserSearchesFromFirebase().then((previousSearches) => { addSearchToUserFirebase(searchInput, previousSearches) })
+      console.log("Running getUserSearchesFromFirebase###################");
+      getUserSearchesFromFirebase().then((data) => { console.log("Here is the data after search: "); console.log(data) });
+      console.log("Running Complete ###################");
+
+
+
+
 
       fetch("https://youtube.googleapis.com/youtube/v3/search?part=snippet&eventType=live&location=" + x + "%2C%20" + y
         + "&locationRadius=" + radius + radiusType + "&maxResults=" + maxResults + "&type=video&key=" + API_KEY_YOUTUBE)

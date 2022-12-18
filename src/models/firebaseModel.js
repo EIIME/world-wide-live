@@ -70,7 +70,6 @@ function getCurrentUser() {
 }
 
 const searchesCollectionRef = collection(db, "search history")
-const usersCollectionRef = collection(db, "users")
 const allSearches = ref([])
 
 async function searchesListenerCB() {
@@ -89,6 +88,7 @@ async function searchesListenerCB() {
   })
 }
 
+
 async function getSearchesFromFirebase() {
   console.log("getSearchesFromFirebase called");
   console.log("firebaseInitPromise pending");
@@ -100,12 +100,15 @@ async function getSearchesFromFirebase() {
 }
 
 async function getUserSearchesFromFirebase() {
-  const docRef = doc(db, "users", getCurrentUser().email);
-  const docSnap = await getDoc(docRef);
+  console.log("getSearchesFromFirebase called");
+  const usersCollectionRef = doc(db, "users", getCurrentUser().email);
+  const docSnap = await getDoc(usersCollectionRef);
+  console.log("Promise pending");
 
   if (docSnap.exists()) {
     console.log("Document data:", docSnap.data().searchHistory);
-    return docSnap.data().searchHistory;
+    console.log("Promise fulfilled");
+    return await docSnap.data().searchHistory;
   } else {
     // doc.data() will be undefined in this case
     console.log("No such document!");
@@ -132,18 +135,23 @@ const addUserToFirebase = (email) => {
   newUser.value = ""
 }
 
-const addSearchToUserFirebase = (city) => {
+const addSearchToUserFirebase = (city, existingSearches = []) => {
   if (isUserLoggedIn()) {
     console.log("addSearchToUserFirebase called");
     console.log("Current user:");
     console.log(getCurrentUser().email);
     const email = getCurrentUser().email;
-    var oldArray = [];
-    if(Array.isArray(getUserSearchesFromFirebase())){
-      oldArray = getUserSearchesFromFirebase();
+    console.log("Existing Searches: ")
+    console.log(existingSearches)
+    if (Array.isArray(existingSearches)) {
+      var oldArray = existingSearches;
+    } else {
+      var oldArray = ["Stockholm", "Göteborg", "Malmö", "Uppsala", "Stockholm", "Stockholm"];
     }
     oldArray.push(city);
-    setDoc(doc(db, "users", email), {
+    console.log("Old array after push: ")
+    console.log(oldArray)
+    updateDoc(doc(db, "users", email), {
       searchHistory: oldArray
     });
   }
