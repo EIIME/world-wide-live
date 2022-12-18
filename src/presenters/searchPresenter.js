@@ -44,6 +44,7 @@ const REF = "test";
 
 export { auth, database, storage, REF};
 */
+var array = ["stockholm", "tokyo","stockholm", "tokyo", "oslo", "stockholm","tokyo","stockholm", "tokyo", "oslo", "stockholm"];
 function createModel(input) {
   if (input) {
     console.log("modelCreated");
@@ -53,12 +54,14 @@ function createModel(input) {
 
 const thisModel = createModel([]);
 
-if(getUserSearchesFromFirebase == []){
-  thisModel.addRecentSearch();
+thisModel.addRecentSearch(array);
+/*if(getUserSearchesFromFirebase == []){
+  thisModel.addRecentSearch(array);
 }
 else{
-  thisModel.addRecentSearch(getUserSearchesFromFirebase);
-}
+  thisModel.addRecentSearch(array);
+  //thisModel.addRecentSearch(getUserSearchesFromFirebase);
+}*/
 
 
 export const search = () => {
