@@ -1,6 +1,7 @@
 <script>
 import { signInUser } from '../models/firebaseModel.js';
 
+
 export default {
     name: 'signInUser',
     methods: {

@@ -1,9 +1,9 @@
 <script>
-import thisModel from '../presenters/searchPresenter.js';
-console.log(thisModel.thisModel.mostSearched.city)
+import {thisModel} from '../models/firebaseModel.js';
+
 export default {
   data() {
-    return { thisModel: thisModel.thisModel }
+    return { thisModel: thisModel }
   }
 
 }
@@ -15,13 +15,13 @@ export default {
     <h1>Your most searched places</h1>
     <ol>
     <li>
-    "You searched " + {{thisModel.mostSearched.city}} + " amount of times: " + {{thisModel.mostSearched.freq}}
+    Your most searched: {{thisModel.mostSearched.city}}. Amount of times: {{thisModel.mostSearched.freq}}
     </li>
     <li>
-    "You searched " + {{thisModel.secondMostSearched.city}} + " amount of times: " + {{thisModel.secondMostSearched.freq}}
+    Your second most searched: {{thisModel.secondMostSearched.city}}. Amount of times: {{thisModel.secondMostSearched.freq}}
     </li>
     <li>
-    "You searched " + {{thisModel.thirdMostSearched.city}} + " amount of times: " + {{thisModel.thirdMostSearched.freq}}
+    Your third most searched: {{thisModel.thirdMostSearched.city}}. Amount of times: {{thisModel.thirdMostSearched.freq}}
     </li>
     </ol>
 

@@ -1,50 +1,45 @@
-import thisModel from "../presenters/searchPresenter.js";
-import {getUserSearchesFromFirebase} from "../models/firebaseModel.js";
+
 
 class SearchModel{
   constructor(theSearchArray){
-    /*if(this.searchArray == undefined){
-        this.searchArray = [];
-    }
-    if(this.topLocation == undefined){
-      this.topLocation = 0;
-    }*/
-    this.searchArray = theSearchArray;
-
+  
     this.mostSearched = {city: "null", freq: 0};
     this.secondMostSearched = {city: "null", freq: 0};
     this.thirdMostSearched = {city: "null", freq: 0};
-
-
-
+    this.addRecentSearches(theSearchArray);
 
   }
 
-   addRecentSearch(array) {
-
+   addRecentSearches(searches) {
+     console.log("addRecentSearch is going on");
      this.mostSearched;
      this.secondMostSearched;
      this.thirdMostSearched;
 
-     console.log("urheurheuhruehurhwifhuialehfguihuerhgiurhegui");
+     var string  = searches.toString();
+     var array = string.split(",");
 
-     //let array = this.searchArray;
-     console.log(array.length);
+
+     if(array == undefined){
+       this.mostSearched = {city: "null", freq: 0};
+       this.secondMostSearched = {city: "null", freq: 0};
+       this.thirdMostSearched = {city: "null", freq: 0};
+       return;
+     }
+
+
      if(array.length < 3){
        this.mostSearched = {city: "null", freq: 0};
        this.secondMostSearched = {city: "null", freq: 0};
        this.thirdMostSearched = {city: "null", freq: 0};
        return;
-       }
+     }
      this.mostSearched = decideTopSearchACB(array);
      this.secondMostSearched = decideTopSearchACB(array.filter(search => search != this.mostSearched.city));
      this.thirdMostSearched = decideTopSearchACB(array.filter(search => search != this.mostSearched.city).filter(search => search != this.secondMostSearched.city));
-     console.log(this.mostSearched.city + " " + this.mostSearched.freq);
-     console.log(this.secondMostSearched.city + " " + this.secondMostSearched.freq);
-     console.log(this.thirdMostSearched.city + " " + this.thirdMostSearched.freq);
-     }
 
 
+}
 }
 function decideTopSearchACB(searches){
   var amountOfSearches = {};
@@ -52,6 +47,7 @@ function decideTopSearchACB(searches){
   var numberOfSearches = 0;
 
   for(const search of searches){
+
     amountOfSearches[search] = (amountOfSearches[search]|| 0) + 1;
   }
   for(const search in amountOfSearches){

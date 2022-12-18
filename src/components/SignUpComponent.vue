@@ -1,5 +1,7 @@
 <script>
 import { signUpUser } from '../models/firebaseModel.js';
+
+
 export default {
     name: 'SignUpComponent',
     data() {

@@ -5,6 +5,21 @@ import { db, auth } from '@/firebase'
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { update } from "firebase/database";
+import SearchModel from "../models/searchModel.js";
+
+var thisModel;
+//getUserSearchesFromFirebase().then((array) => {thisModel = new SearchModel(array);});
+
+function createModelWithoutData(){
+  thisModel = new SearchModel([]);
+}
+
+function createModelWithData() {
+    console.log("modelCreated");
+    getUserSearchesFromFirebase().then((array) => {thisModel = new SearchModel(array)});
+
+
+}
 
 
 function signUpUser(email, password) {
@@ -29,6 +44,7 @@ function signUpUser(email, password) {
       const errorMessage = error.message;
       // ..
     });
+    createModelWithoutData();
 
 }
 
@@ -45,6 +61,7 @@ function signInUser(email, password) {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
+
       // ...
     })
     .catch((error) => {
@@ -53,6 +70,8 @@ function signInUser(email, password) {
     });
   console.log("signInUser finished!!!! ")
   console.log("Is user logged in? ::: " + isUserLoggedIn())
+  createModelWithData();
+  //thisModel.addRecentSearches([]);
 }
 
 function isUserLoggedIn() {
@@ -179,5 +198,6 @@ export {
   signUpUser,
   signInUser,
   addSearchToUserFirebase,
-  getUserSearchesFromFirebase
+  getUserSearchesFromFirebase,
+  thisModel
 };

@@ -2,6 +2,7 @@ import { API_KEY_GEOCODE, API_KEY_YOUTUBE } from "../apiConfig.js";
 import { firebaseConfig } from "../firebaseConfig.js";
 import { searchResultsView } from "../views/searchResultsView.js";
 import SearchModel from "../models/searchModel.js"
+import {thisModel} from "../models/firebaseModel.js";
 
 // import * as firebase from 'firebase/app';
 
@@ -44,24 +45,12 @@ const REF = "test";
 
 export { auth, database, storage, REF};
 */
-var array = ["stockholm", "tokyo", "stockholm", "tokyo", "oslo", "stockholm", "tokyo", "stockholm", "tokyo", "oslo", "stockholm"];
-function createModel(input) {
-  if (input) {
-    console.log("modelCreated");
-    return new SearchModel(input);
-  }
-}
+//var array = ["stockholm", "tokyo", "stockholm", "tokyo", "oslo", "stockholm", "tokyo", "stockholm", "tokyo", "oslo", "stockholm"];
 
-const thisModel = createModel([]);
 
-thisModel.addRecentSearch(array);
-/*if(getUserSearchesFromFirebase == []){
-  thisModel.addRecentSearch(array);
-}
-else{
-  thisModel.addRecentSearch(array);
-  //thisModel.addRecentSearch(getUserSearchesFromFirebase);
-}*/
+//var thisModel = createModel();
+
+
 
 
 export const search = () => {
@@ -136,7 +125,8 @@ export const search = () => {
 
 
       getUserSearchesFromFirebase().then((previousSearches) => { console.log("Before search: "); console.log(previousSearches) })
-      getUserSearchesFromFirebase().then((previousSearches) => { addSearchToUserFirebase(searchInput, previousSearches) })
+      getUserSearchesFromFirebase().then((previousSearches) => { addSearchToUserFirebase(searchInput, previousSearches);
+        getUserSearchesFromFirebase().then((array) => {thisModel.addRecentSearches(array)}); })
       console.log("Running getUserSearchesFromFirebase###################");
       getUserSearchesFromFirebase().then((data) => { console.log("Here is the data after search: "); console.log(data) });
       console.log("Running Complete ###################");
@@ -225,4 +215,3 @@ export const search = () => {
   printAddress();
 
 }
-export default { thisModel };
