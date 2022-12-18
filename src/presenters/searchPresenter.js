@@ -25,39 +25,12 @@ import { getAuth } from "firebase/auth";
 import { addSearchToFirebase, addSearchToUserFirebase, allSearches, getCurrentUser, getSearchesFromFirebase, getUserSearchesFromFirebase, searchesListenerCB } from "../models/firebaseModel.js";
 import { onMounted } from "vue";
 
-/*
-const searchArray = await getSearchesFromFirebase().then(
-  (data) => {
-    console.log("searchArray Final");
-    console.log(data);
-    return data;
-  }
-).catch((error) => { console.log(error) });
-*/
-
-/*
-firebase.initializeApp(firebaseConfig);
-const auth = getAuth();
-const database = getDatabase();
-const storage = firebase.storage();
-
-const REF = "test";
-
-export { auth, database, storage, REF};
-*/
-//var array = ["stockholm", "tokyo", "stockholm", "tokyo", "oslo", "stockholm", "tokyo", "stockholm", "tokyo", "oslo", "stockholm"];
-
-
-//var thisModel = createModel();
-
 
 
 
 export const search = () => {
 
-  //database.ref(REF+"/test").set("dummy");
-  //console.log("now in search, firebase should save data");
-
+  
 
   var element = document.getElementById("video")
   // remove all child nodes of element

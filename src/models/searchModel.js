@@ -2,7 +2,7 @@
 
 class SearchModel{
   constructor(theSearchArray){
-  
+
     this.mostSearched = {city: "null", freq: 0};
     this.secondMostSearched = {city: "null", freq: 0};
     this.thirdMostSearched = {city: "null", freq: 0};
@@ -27,13 +27,28 @@ class SearchModel{
        return;
      }
 
-
-     if(array.length < 3){
+     if(array.length == 0){
        this.mostSearched = {city: "null", freq: 0};
        this.secondMostSearched = {city: "null", freq: 0};
        this.thirdMostSearched = {city: "null", freq: 0};
        return;
      }
+     if(array.length == 1){
+       this.mostSearched = decideTopSearchACB(array);
+       return;
+     }
+     if(array.length == 2){
+       this.mostSearched = decideTopSearchACB(array);
+       this.secondMostSearched = decideTopSearchACB(array.filter(search => search != this.mostSearched.city));
+       return;
+     }
+
+     /*if(array.length < 3){
+       this.mostSearched = {city: "null", freq: 0};
+       this.secondMostSearched = {city: "null", freq: 0};
+       this.thirdMostSearched = {city: "null", freq: 0};
+       return;
+     }*/
      this.mostSearched = decideTopSearchACB(array);
      this.secondMostSearched = decideTopSearchACB(array.filter(search => search != this.mostSearched.city));
      this.thirdMostSearched = decideTopSearchACB(array.filter(search => search != this.mostSearched.city).filter(search => search != this.secondMostSearched.city));
