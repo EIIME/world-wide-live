@@ -9,7 +9,6 @@ export default {
   methods: {
     search
   }
-
 }
 </script>
 
@@ -18,7 +17,8 @@ export default {
     <input id="searchInput" class="searchInput" type="text" placeholder="Look for your favorite spot">
     <button v-on:click.native=search id="searchBtn" class="searchBtn">Search!</button>
     <router-link to="/yourtopsearches">
-    <button v-on:click.native=topSearchesView id="toppSearchBtn" class="toppSearchBtn">View Your Most Searched</button>
+      <button v-on:click.native=topSearchesView id="toppSearchBtn" class="toppSearchBtn">View Your Most
+        Searched Locations</button>
     </router-link>
     <div>
       <template v-if="isUserLoggedIn">
