@@ -1,42 +1,51 @@
 # World Wide Live
 >Connect live from anywhere on Earth! ^_^
 
-Hosting URL: https://world-wide-live-9f9de.web.app/
+The webapp can be accessed from this URL: https://world-wide-live-9f9de.web.app/
 
-This webapp helps users locate live video stream from Youtube based on location. The user can prompt a location, address or postal code and then is presented with active live video streams in a selected radius around that location. The stream is viewed in an embedded Youtube window. 
+## App description
+The user will make an account or sign in before accessing the app. Once signed in the user can search for locations like cities, postal codes or addresses. The user will then be presented with a list of Youtube livestreams that are availible close to that location. The list includes thumbnails, titles, description and channel name. When the user clicks on a thumbnail or title they will be sent to Youtube where they can watch the stream. Searches that the user has made are stored in firebase and the top 3 searches can be viewed in the app.
 
-## What has been done so far
-The user can search for a location and is presented with a list of live streams. The list includes titles and links to the youtube streams.
-
-## What is left to do
-- Styling, responsive layout, logo
+## What could be done given more time (or continued upon in the future)
+- Styling, responsive layout, custom logo
 - Embedded Youtube player (or link to Youtube if API cost is too high)
 - Present more information about the stream
 - Search features like radius and autocompletion
-
-## Goals if there is time left
 - Filter options like views, etc...
 - An interactive map with markers for the live streams
 - A random location option
 
 ## Project structure and files
-This is a Vite project with Vue 3 deployed with Firebase. Naive UI is used as basis for Vue components.
+This is a Vite project with Vue 3 deployed with Firebase.
 
 As for the project structure:
 - `src` is where the code lives
-    - `components` is where the Vue components live
+    - `components` is where the Vue components live. These are displayed in the views folder
     - `router` is where the Vue router lives
+    - `firebase` is where the firebase setup lives
+    - `models` is where the models live
+    - `presenters` is where the presenters live
     - `views` is where the Vue views live
 - `public` is where static assets live
 - `dist` is where the build output lives (private, not on github)
 
 As for the files that contain the app:
+- `src/app.vue` VueApp File, contains the app and runs code that is executed on app load 
+
 - `src/router/index.js` VueRouter JS File, routes compoonents for single page application
 
 - `src/components/HeaderComponent.vue` Main header and subheader
-- `src/components/SearchComponent.vue` Searchfield for location, submit button and list of streams
+- `src/components/SearchComponent.vue` Searchfield for location, buttons and list of streams
+- `src/components/SignUpComponent.vue` The form where the user signs up
+- `src/components/LogInComponent.vue` The form where the user logs in
+- `src/components/TopSearchComponent.vue` Top 3 most searched locations list and header
 
-- `src/searchResults.js` JS code containing API calls for search results and construction of links
+- `src/firebase/index,js` firebase setup and initialization
+
+- `src/moodels/searchModel.js` searchModel class and methods which stores the user searches locally while running the app
+- `src/models/firebaseModel.js` firebase related functions including getters and adders
+ 
+- `src/presenters/searchPresenter.js` searchPresenter that makes calls upon functions after event triggers from SearchComponent
 
 
 # Project Setup Guide
@@ -44,7 +53,7 @@ As for the files that contain the app:
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## ~~Customize configuration~~
+## Customize configuration (optional)
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
@@ -89,7 +98,7 @@ npm install -g firebase-tools
 firebase login
 ```
 
-## Initialise Firebase (select no to overwrite)
+## Initialise Firebase (select no to overwrite, select dist as app build folder)
 ```sh
 firebase init
 ```
